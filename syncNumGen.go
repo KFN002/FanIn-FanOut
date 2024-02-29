@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"sync"
 )
 
@@ -128,18 +127,4 @@ func processTempCh[T sequenced](ctx context.Context, inputChannelsNum int, fanIn
 		}
 	}()
 	return outputCh
-}
-
-func main() {
-	ctx := context.Background()
-	nums := []Num{
-		{0}, {1}, {2}, {3}, {4}, {5}, {6},
-	}
-	inputCh1 := EvenNumbersGen(ctx, nums...)
-	inputCh2 := OddNumbersGen(ctx, nums...)
-	inCh := inTemp(ctx, inputCh1, inputCh2)
-	outCh := processTempCh(ctx, 2, inCh)
-	for num := range outCh {
-		fmt.Println(num)
-	}
 }
